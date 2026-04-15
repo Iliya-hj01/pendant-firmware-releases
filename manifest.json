@@ -1,10 +1,10 @@
-{
-  "product": "nama-pendant",
-  "latest": {
-    "version": "1.0.0",
-    "url": "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/v1.0.0/firmware_signed.bin",
-    "size": 0,
-    "sha256": "",
-    "release_notes": "Initial release with MCUboot DFU support"
-  }
+﻿{
+    "latest":  {
+                   "url":  "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/v1.0.0/firmware_signed.bin",
+                   "release_notes":  "Initial release with MCUboot DFU support",
+                   "version":  "1.0.0",
+                   "size":  679936,
+                   "sha256":  "74095104119b9c8d01c7ee1fbb0444d1014cb9e50f8285fefde8ebc5202505e1"
+               },
+    "product":  "nama-pendant"
 }
