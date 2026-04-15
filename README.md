@@ -1,6 +1,6 @@
 # Pendant Firmware Releases
 
-Signed firmware images for the NAMA pendant (Seeed XIAO nRF54L15).
+Signed firmware images for the Lilum pendant (Seeed XIAO nRF54L15).
 
 ## For the Android App
 
