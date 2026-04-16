@@ -1,10 +1,10 @@
 ﻿{
     "latest":  {
-                   "url":  "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/v1.2.0/firmware_signed.bin",
-                   "release_notes":  "Description of changes",
-                   "version":  "1.2.0",
-                   "size":  679936,
-                   "sha256":  "a7d924f45eb7c71ba5ae7687aeab5410b193749beeeb2711fc88325dac9bf094"
+                   "url":  "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/v1.2.1/firmware_v1.2.1.bin",
+                   "release_notes":  "Fix OTA image format",
+                   "version":  "1.2.1",
+                   "size":  163376,
+                   "sha256":  "c49b3a419ba43d96534c57dc41c95494d16e1b6ff4e2b9b979d7af544c0343d6"
                },
     "product":  "nama-pendant"
 }
