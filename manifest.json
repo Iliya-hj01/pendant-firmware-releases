@@ -1,10 +1,10 @@
 ﻿{
     "latest":  {
-                   "url":  "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/v1.3.0/firmware_v1.3.0.bin",
-                   "release_notes":  "Changed auto pattern order",
-                   "version":  "1.3.0",
+                   "url":  "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/v1.3.1/firmware_v1.3.1.bin",
+                   "release_notes":  "Fix version in BLE characteristic",
+                   "version":  "1.3.1",
                    "size":  163376,
-                   "sha256":  "04747511c9477a04c019069d294f692ad7c7e5eda50e31bd2f0c9ce5c615f338"
+                   "sha256":  "d42f1089868816bebbf7d37d7040d02e98401f4074ecae65577b2fdff4fcac14"
                },
     "product":  "nama-pendant"
 }
