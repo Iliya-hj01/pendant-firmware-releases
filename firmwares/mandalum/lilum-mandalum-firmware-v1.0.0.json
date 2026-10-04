@@ -1,0 +1,1636 @@
+{
+  "documentType": "lilum-firmware",
+  "schemaVersion": 1,
+  "product": {
+    "code": 1,
+    "key": "lilum.mandalum"
+  },
+  "firmware": {
+    "version": "1.0.0",
+    "releaseDate": "2026-10-04",
+    "releaseNotes": "First Mandalum release: configurable animations, palettes and settings over the protocol-1.0 configuration service, atomic configuration storage, signed MCUboot images."
+  },
+  "definition": {
+    "revision": 1,
+    "contentHash": {
+      "algorithm": "sha256",
+      "canonicalization": "lilum-canonical-json-1",
+      "scope": ["animations", "constraints", "defaults", "palettes", "settings"],
+      "value": "1372d48dea171824dfb91797d8616074ece94f572c326528a55e6773866a8467"
+    }
+  },
+  "compatibility": {
+    "hardwareRevisions": [1],
+    "bleProtocol": {
+      "major": 1,
+      "minor": 0
+    },
+    "configFormat": 1,
+    "reportedCapabilities": 3
+  },
+  "release": {
+    "bootloader": {
+      "name": "mcuboot",
+      "imageHeaderSizeBytes": 2048,
+      "imageAlignmentBytes": 4,
+      "slotSizeBytes": 679936,
+      "trustedKey": {
+        "algorithm": "ed25519",
+        "publicKeyDerSha256": "b9e6364a8dabd12c947bc71f5fc89bc18a5fd38f488ae5f6f3b9ba0fce6430b5"
+      }
+    },
+    "signature": {
+      "format": "mcuboot-embedded",
+      "algorithm": "ed25519"
+    },
+    "artifacts": [
+      {
+        "id": "mandalumHardwareRevision1Application",
+        "hardwareRevisions": [1],
+        "format": "mcuboot-signed-bin",
+        "url": "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/mandalum-v1.0.0/lilum-mandalum-firmware-v1.0.0.bin",
+        "sizeBytes": 217696,
+        "sha256": "658e744b42e70128cb88a2b73cb497c3eff2f16825a5ae16e199da658f3bd5da"
+      }
+    ]
+  },
+  "settings": [
+    {
+      "id": "startupBrightness",
+      "index": 0,
+      "name": "Startup brightness",
+      "description": "Normal brightness applied at power-on and shown live while edited. Must lie between the minimum and maximum brightness.",
+      "control": "slider",
+      "minimum": 0,
+      "maximum": 255,
+      "default": 35,
+      "display": {
+        "type": "percent",
+        "unit": "%"
+      },
+      "updatePolicy": "A"
+    },
+    {
+      "id": "minimumBrightness",
+      "index": 1,
+      "name": "Minimum brightness",
+      "description": "Lower bound for user-adjustable normal brightness. Committed limits immediately clamp current normal brightness.",
+      "control": "slider",
+      "minimum": 0,
+      "maximum": 255,
+      "default": 35,
+      "display": {
+        "type": "percent",
+        "unit": "%"
+      },
+      "updatePolicy": "B"
+    },
+    {
+      "id": "maximumBrightness",
+      "index": 2,
+      "name": "Maximum brightness",
+      "description": "Upper bound for normal animation brightness. It does not limit the flashlight.",
+      "control": "slider",
+      "minimum": 0,
+      "maximum": 255,
+      "default": 200,
+      "display": {
+        "type": "percent",
+        "unit": "%"
+      },
+      "updatePolicy": "B"
+    },
+    {
+      "id": "startupMode",
+      "index": 3,
+      "name": "Startup mode",
+      "description": "Which playlist or slot plays at the next power-on. It never switches the current mode.",
+      "control": "list",
+      "minimum": 0,
+      "maximum": 2,
+      "default": 0,
+      "display": {
+        "type": "integer",
+        "unit": ""
+      },
+      "updatePolicy": "B",
+      "options": [
+        {
+          "value": 0,
+          "name": "Automatic playlist"
+        },
+        {
+          "value": 1,
+          "name": "Manual playlist"
+        },
+        {
+          "value": 2,
+          "name": "Single animation"
+        }
+      ]
+    },
+    {
+      "id": "musicEnabled",
+      "index": 4,
+      "name": "Music reactivity",
+      "description": "Controls eligibility of music-reactive animations. Disabling it removes ineligible entries.",
+      "control": "toggle",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "display": {
+        "type": "integer",
+        "unit": ""
+      },
+      "updatePolicy": "B",
+      "requiresCapabilityBit": 0,
+      "showOnlyIfAnimationRequires": "music"
+    },
+    {
+      "id": "movementEnabled",
+      "index": 5,
+      "name": "Movement reactivity",
+      "description": "Controls eligibility of movement-reactive animations. Disabling it removes ineligible entries.",
+      "control": "toggle",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "display": {
+        "type": "integer",
+        "unit": ""
+      },
+      "updatePolicy": "B",
+      "requiresCapabilityBit": 1,
+      "showOnlyIfAnimationRequires": "movement"
+    },
+    {
+      "id": "singlePressAction",
+      "index": 6,
+      "name": "Single press action",
+      "description": "Mode-button single press: 0 does nothing, 1 progresses to the next animation.",
+      "control": "toggle",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 1,
+      "display": {
+        "type": "integer",
+        "unit": ""
+      },
+      "updatePolicy": "B"
+    },
+    {
+      "id": "doublePressAction",
+      "index": 7,
+      "name": "Double press action",
+      "description": "Mode-button double press: 0 does nothing, 1 toggles the flashlight.",
+      "control": "toggle",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 1,
+      "display": {
+        "type": "integer",
+        "unit": ""
+      },
+      "updatePolicy": "B"
+    },
+    {
+      "id": "longPressAction",
+      "index": 8,
+      "name": "Long press action",
+      "description": "Mode-button long press: 0 does nothing, 1 increases brightness within the configured limits.",
+      "control": "toggle",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 1,
+      "display": {
+        "type": "integer",
+        "unit": ""
+      },
+      "updatePolicy": "B"
+    },
+    {
+      "id": "flashlightHue",
+      "index": 9,
+      "name": "Flashlight hue",
+      "description": "Flashlight hue, displayed on a 0-100 scale rather than degrees.",
+      "control": "slider",
+      "minimum": 0,
+      "maximum": 255,
+      "default": 0,
+      "display": {
+        "type": "percent",
+        "unit": "%"
+      },
+      "updatePolicy": "A"
+    },
+    {
+      "id": "flashlightSaturation",
+      "index": 10,
+      "name": "Flashlight saturation",
+      "description": "Flashlight saturation. Zero is white when brightness is nonzero.",
+      "control": "slider",
+      "minimum": 0,
+      "maximum": 255,
+      "default": 0,
+      "display": {
+        "type": "percent",
+        "unit": "%"
+      },
+      "updatePolicy": "A"
+    },
+    {
+      "id": "flashlightBrightness",
+      "index": 11,
+      "name": "Flashlight brightness",
+      "description": "Flashlight brightness over the full byte range, independent of the normal brightness limits. Zero is black.",
+      "control": "slider",
+      "minimum": 0,
+      "maximum": 255,
+      "default": 200,
+      "display": {
+        "type": "percent",
+        "unit": "%"
+      },
+      "updatePolicy": "A"
+    },
+    {
+      "id": "automaticDuration",
+      "index": 12,
+      "name": "Automatic duration",
+      "description": "Shared duration of every automatic-playlist entry: seconds = value + 1.",
+      "control": "slider",
+      "minimum": 0,
+      "maximum": 255,
+      "default": 9,
+      "display": {
+        "type": "offsetInteger",
+        "unit": "s",
+        "offset": 1
+      },
+      "updatePolicy": "B"
+    }
+  ],
+  "constraints": [
+    {
+      "type": "nonDecreasing",
+      "settings": ["minimumBrightness", "startupBrightness", "maximumBrightness"]
+    }
+  ],
+  "animations": [
+    {
+      "id": 0,
+      "definitionRevision": 1,
+      "name": "mandalum_rainbow",
+      "description": "A cycling HSV rainbow distributed across the selected geometry.",
+      "requiresMusic": false,
+      "requiresMovement": false,
+      "parameters": [
+        {
+          "index": 0,
+          "name": "speed",
+          "description": "Rate of hue change; zero freezes the current phase.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 60,
+          "display": {
+            "type": "integer",
+            "unit": "hue steps/s"
+          },
+          "options": []
+        },
+        {
+          "index": 1,
+          "name": "spread",
+          "description": "Hue spacing between mapping groups.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 30,
+          "display": {
+            "type": "integer",
+            "unit": "hue steps/group"
+          },
+          "options": []
+        },
+        {
+          "index": 2,
+          "name": "mapping",
+          "description": "Pixel groups receiving each color.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 7,
+          "default": 1,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Full"
+            },
+            {
+              "value": 1,
+              "name": "Rings"
+            },
+            {
+              "value": 2,
+              "name": "Horizontal lines"
+            },
+            {
+              "value": 3,
+              "name": "Vertical lines"
+            },
+            {
+              "value": 4,
+              "name": "Radial belly"
+            },
+            {
+              "value": 5,
+              "name": "Radial back"
+            },
+            {
+              "value": 6,
+              "name": "Radial wing"
+            },
+            {
+              "value": 7,
+              "name": "Wings"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "name": "saturation",
+          "description": "Zero is white; 255 is fully saturated.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 255,
+          "display": {
+            "type": "percent",
+            "unit": "%"
+          },
+          "options": []
+        },
+        {
+          "index": 4,
+          "name": "direction",
+          "description": "Phase direction and optional symmetric spread.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 3,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Forward"
+            },
+            {
+              "value": 1,
+              "name": "Backward"
+            },
+            {
+              "value": 2,
+              "name": "Symmetric forward"
+            },
+            {
+              "value": 3,
+              "name": "Symmetric backward"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "name": "brightness",
+          "description": "Relative intensity under normal device brightness.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 128,
+          "display": {
+            "type": "percent",
+            "unit": "%"
+          },
+          "options": []
+        },
+        {
+          "index": 6,
+          "name": "unused6",
+          "description": "Unused; transmit the default zero.",
+          "used": false,
+          "control": "hidden",
+          "minimum": 0,
+          "maximum": 0,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": []
+        },
+        {
+          "index": 7,
+          "name": "unused7",
+          "description": "Unused; transmit the default zero.",
+          "used": false,
+          "control": "hidden",
+          "minimum": 0,
+          "maximum": 0,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": []
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "definitionRevision": 1,
+      "name": "mandalum_colorfull",
+      "description": "A cycling 16-color palette distributed across the selected geometry.",
+      "requiresMusic": false,
+      "requiresMovement": false,
+      "parameters": [
+        {
+          "index": 0,
+          "name": "speed",
+          "description": "Rate of palette-index change; zero freezes phase.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 60,
+          "display": {
+            "type": "integer",
+            "unit": "index steps/s"
+          },
+          "options": []
+        },
+        {
+          "index": 1,
+          "name": "spread",
+          "description": "Palette-index spacing between mapping groups.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 30,
+          "display": {
+            "type": "integer",
+            "unit": "index steps/group"
+          },
+          "options": []
+        },
+        {
+          "index": 2,
+          "name": "mapping",
+          "description": "Pixel groups receiving each color.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 7,
+          "default": 1,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Full"
+            },
+            {
+              "value": 1,
+              "name": "Rings"
+            },
+            {
+              "value": 2,
+              "name": "Horizontal lines"
+            },
+            {
+              "value": 3,
+              "name": "Vertical lines"
+            },
+            {
+              "value": 4,
+              "name": "Radial belly"
+            },
+            {
+              "value": 5,
+              "name": "Radial back"
+            },
+            {
+              "value": 6,
+              "name": "Radial wing"
+            },
+            {
+              "value": 7,
+              "name": "Wings"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "name": "palette",
+          "description": "Built-in 16-color RGB palette, including Mandalum variants.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 10,
+          "default": 4,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Cloud"
+            },
+            {
+              "value": 1,
+              "name": "Lava"
+            },
+            {
+              "value": 2,
+              "name": "Ocean"
+            },
+            {
+              "value": 3,
+              "name": "Forest"
+            },
+            {
+              "value": 4,
+              "name": "Rainbow"
+            },
+            {
+              "value": 5,
+              "name": "Rainbow Stripe"
+            },
+            {
+              "value": 6,
+              "name": "Party"
+            },
+            {
+              "value": 7,
+              "name": "Heat"
+            },
+            {
+              "value": 8,
+              "name": "Ignis"
+            },
+            {
+              "value": 9,
+              "name": "Terra"
+            },
+            {
+              "value": 10,
+              "name": "Glacies"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "name": "direction",
+          "description": "Phase direction and optional symmetric spread.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 3,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Forward"
+            },
+            {
+              "value": 1,
+              "name": "Backward"
+            },
+            {
+              "value": 2,
+              "name": "Symmetric forward"
+            },
+            {
+              "value": 3,
+              "name": "Symmetric backward"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "name": "brightness",
+          "description": "Relative intensity under normal device brightness.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 128,
+          "display": {
+            "type": "percent",
+            "unit": "%"
+          },
+          "options": []
+        },
+        {
+          "index": 6,
+          "name": "unused6",
+          "description": "Unused; transmit the default zero.",
+          "used": false,
+          "control": "hidden",
+          "minimum": 0,
+          "maximum": 0,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": []
+        },
+        {
+          "index": 7,
+          "name": "unused7",
+          "description": "Unused; transmit the default zero.",
+          "used": false,
+          "control": "hidden",
+          "minimum": 0,
+          "maximum": 0,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": []
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "definitionRevision": 1,
+      "name": "mandalum_confetti",
+      "description": "Fading palette-colored sparks lighting randomly selected mapping groups.",
+      "requiresMusic": false,
+      "requiresMovement": false,
+      "parameters": [
+        {
+          "index": 0,
+          "name": "speed",
+          "description": "Rate of palette-index change; zero freezes color cycling.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 60,
+          "display": {
+            "type": "integer",
+            "unit": "index steps/s"
+          },
+          "options": []
+        },
+        {
+          "index": 1,
+          "name": "spread",
+          "description": "Maximum random palette-index offset, inclusive.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 63,
+          "display": {
+            "type": "integer",
+            "unit": "index steps"
+          },
+          "options": []
+        },
+        {
+          "index": 2,
+          "name": "mapping",
+          "description": "Each spark lights one entire pixel group.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 7,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Full"
+            },
+            {
+              "value": 1,
+              "name": "Rings"
+            },
+            {
+              "value": 2,
+              "name": "Horizontal lines"
+            },
+            {
+              "value": 3,
+              "name": "Vertical lines"
+            },
+            {
+              "value": 4,
+              "name": "Radial belly"
+            },
+            {
+              "value": 5,
+              "name": "Radial back"
+            },
+            {
+              "value": 6,
+              "name": "Radial wing"
+            },
+            {
+              "value": 7,
+              "name": "Wings"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "name": "palette",
+          "description": "Built-in 16-color RGB palette for new sparks.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 10,
+          "default": 4,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Cloud"
+            },
+            {
+              "value": 1,
+              "name": "Lava"
+            },
+            {
+              "value": 2,
+              "name": "Ocean"
+            },
+            {
+              "value": 3,
+              "name": "Forest"
+            },
+            {
+              "value": 4,
+              "name": "Rainbow"
+            },
+            {
+              "value": 5,
+              "name": "Rainbow Stripe"
+            },
+            {
+              "value": 6,
+              "name": "Party"
+            },
+            {
+              "value": 7,
+              "name": "Heat"
+            },
+            {
+              "value": 8,
+              "name": "Ignis"
+            },
+            {
+              "value": 9,
+              "name": "Terra"
+            },
+            {
+              "value": 10,
+              "name": "Glacies"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "name": "spark_rate",
+          "description": "New sparks per second; zero stops generation.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 60,
+          "display": {
+            "type": "integer",
+            "unit": "sparks/s"
+          },
+          "options": []
+        },
+        {
+          "index": 5,
+          "name": "fade",
+          "description": "Linear RGB decay; zero preserves existing trails.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 180,
+          "display": {
+            "type": "integer",
+            "unit": "RGB levels/250 ms"
+          },
+          "options": []
+        },
+        {
+          "index": 6,
+          "name": "brightness",
+          "description": "Relative intensity under normal device brightness.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 255,
+          "display": {
+            "type": "percent",
+            "unit": "%"
+          },
+          "options": []
+        },
+        {
+          "index": 7,
+          "name": "unused7",
+          "description": "Unused; transmit the default zero.",
+          "used": false,
+          "control": "hidden",
+          "minimum": 0,
+          "maximum": 0,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": []
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "definitionRevision": 1,
+      "name": "mandalum_vortex",
+      "description": "Palette-colored pulses rotating around three phase-offset rings.",
+      "requiresMusic": false,
+      "requiresMovement": false,
+      "parameters": [
+        {
+          "index": 0,
+          "name": "rotation_speed",
+          "description": "Pulse revolutions per minute; zero freezes rotation.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 60,
+          "display": {
+            "type": "integer",
+            "unit": "rpm"
+          },
+          "options": []
+        },
+        {
+          "index": 1,
+          "name": "color_speed",
+          "description": "Palette-index steps per second; zero freezes color cycling.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 43,
+          "display": {
+            "type": "integer",
+            "unit": "index steps/s"
+          },
+          "options": []
+        },
+        {
+          "index": 2,
+          "name": "color_spread",
+          "description": "Palette-index spacing between adjacent rings.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 60,
+          "display": {
+            "type": "integer",
+            "unit": "index steps/ring"
+          },
+          "options": []
+        },
+        {
+          "index": 3,
+          "name": "palette",
+          "description": "Built-in 16-color RGB palette, including Mandalum variants.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 10,
+          "default": 8,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Cloud"
+            },
+            {
+              "value": 1,
+              "name": "Lava"
+            },
+            {
+              "value": 2,
+              "name": "Ocean"
+            },
+            {
+              "value": 3,
+              "name": "Forest"
+            },
+            {
+              "value": 4,
+              "name": "Rainbow"
+            },
+            {
+              "value": 5,
+              "name": "Rainbow Stripe"
+            },
+            {
+              "value": 6,
+              "name": "Party"
+            },
+            {
+              "value": 7,
+              "name": "Heat"
+            },
+            {
+              "value": 8,
+              "name": "Ignis"
+            },
+            {
+              "value": 9,
+              "name": "Terra"
+            },
+            {
+              "value": 10,
+              "name": "Glacies"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "name": "direction",
+          "description": "Phase direction; symmetric modes mirror the pulse within each ring.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 3,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Forward"
+            },
+            {
+              "value": 1,
+              "name": "Backward"
+            },
+            {
+              "value": 2,
+              "name": "Symmetric forward"
+            },
+            {
+              "value": 3,
+              "name": "Symmetric backward"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "name": "pulse_width",
+          "description": "Zero is the narrowest pulse; 255 is the broadest.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 128,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": []
+        },
+        {
+          "index": 6,
+          "name": "pulse_phase_spread",
+          "description": "Pulse offset between rings; 256 phase steps make one turn.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 56,
+          "display": {
+            "type": "integer",
+            "unit": "phase steps/ring"
+          },
+          "options": []
+        },
+        {
+          "index": 7,
+          "name": "brightness",
+          "description": "Relative intensity under normal device brightness.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 200,
+          "display": {
+            "type": "percent",
+            "unit": "%"
+          },
+          "options": []
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "definitionRevision": 1,
+      "name": "mandalum_portal",
+      "description": "Palette-colored sine pulses traveling across whole mapping groups.",
+      "requiresMusic": false,
+      "requiresMovement": false,
+      "parameters": [
+        {
+          "index": 0,
+          "name": "pulse_speed",
+          "description": "Pulse cycles per minute; zero freezes the pulse phase.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 35,
+          "display": {
+            "type": "integer",
+            "unit": "cycles/min"
+          },
+          "options": []
+        },
+        {
+          "index": 1,
+          "name": "color_speed",
+          "description": "Palette-index steps per second; zero freezes color cycling.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 60,
+          "display": {
+            "type": "integer",
+            "unit": "index steps/s"
+          },
+          "options": []
+        },
+        {
+          "index": 2,
+          "name": "color_spread",
+          "description": "Palette-index spacing between adjacent mapping groups.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 64,
+          "display": {
+            "type": "integer",
+            "unit": "index steps/group"
+          },
+          "options": []
+        },
+        {
+          "index": 3,
+          "name": "palette",
+          "description": "Built-in 16-color RGB palette, including Mandalum variants.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 10,
+          "default": 4,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Cloud"
+            },
+            {
+              "value": 1,
+              "name": "Lava"
+            },
+            {
+              "value": 2,
+              "name": "Ocean"
+            },
+            {
+              "value": 3,
+              "name": "Forest"
+            },
+            {
+              "value": 4,
+              "name": "Rainbow"
+            },
+            {
+              "value": 5,
+              "name": "Rainbow Stripe"
+            },
+            {
+              "value": 6,
+              "name": "Party"
+            },
+            {
+              "value": 7,
+              "name": "Heat"
+            },
+            {
+              "value": 8,
+              "name": "Ignis"
+            },
+            {
+              "value": 9,
+              "name": "Terra"
+            },
+            {
+              "value": 10,
+              "name": "Glacies"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "name": "direction",
+          "description": "Phase direction; symmetric modes mirror group pulse offsets.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 3,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Forward"
+            },
+            {
+              "value": 1,
+              "name": "Backward"
+            },
+            {
+              "value": 2,
+              "name": "Symmetric forward"
+            },
+            {
+              "value": 3,
+              "name": "Symmetric backward"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "name": "mapping",
+          "description": "Each group pulses uniformly; Rings includes pixel 27 as ring four.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 7,
+          "default": 1,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Full"
+            },
+            {
+              "value": 1,
+              "name": "Rings"
+            },
+            {
+              "value": 2,
+              "name": "Horizontal lines"
+            },
+            {
+              "value": 3,
+              "name": "Vertical lines"
+            },
+            {
+              "value": 4,
+              "name": "Radial belly"
+            },
+            {
+              "value": 5,
+              "name": "Radial back"
+            },
+            {
+              "value": 6,
+              "name": "Radial wing"
+            },
+            {
+              "value": 7,
+              "name": "Wings"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "name": "pulse_phase_spread",
+          "description": "Pulse offset between groups; 256 phase steps make one cycle.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 64,
+          "display": {
+            "type": "integer",
+            "unit": "phase steps/group"
+          },
+          "options": []
+        },
+        {
+          "index": 7,
+          "name": "brightness",
+          "description": "Relative intensity under normal device brightness.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 255,
+          "display": {
+            "type": "percent",
+            "unit": "%"
+          },
+          "options": []
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "definitionRevision": 1,
+      "name": "mandalum_wings",
+      "description": "Palette-colored motion across the five fixed Wings groups with fading trails.",
+      "requiresMusic": false,
+      "requiresMovement": false,
+      "parameters": [
+        {
+          "index": 0,
+          "name": "motion_speed",
+          "description": "Movement cycles per minute; zero holds the current group.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 40,
+          "display": {
+            "type": "integer",
+            "unit": "cycles/min"
+          },
+          "options": []
+        },
+        {
+          "index": 1,
+          "name": "color_speed",
+          "description": "Palette-index steps per second; zero freezes color cycling.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 60,
+          "display": {
+            "type": "integer",
+            "unit": "index steps/s"
+          },
+          "options": []
+        },
+        {
+          "index": 2,
+          "name": "color_spread",
+          "description": "Palette-index spacing between adjacent Wings groups.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 60,
+          "display": {
+            "type": "integer",
+            "unit": "index steps/group"
+          },
+          "options": []
+        },
+        {
+          "index": 3,
+          "name": "palette",
+          "description": "Built-in 16-color RGB palette, including Mandalum variants.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 10,
+          "default": 4,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Cloud"
+            },
+            {
+              "value": 1,
+              "name": "Lava"
+            },
+            {
+              "value": 2,
+              "name": "Ocean"
+            },
+            {
+              "value": 3,
+              "name": "Forest"
+            },
+            {
+              "value": 4,
+              "name": "Rainbow"
+            },
+            {
+              "value": 5,
+              "name": "Rainbow Stripe"
+            },
+            {
+              "value": 6,
+              "name": "Party"
+            },
+            {
+              "value": 7,
+              "name": "Heat"
+            },
+            {
+              "value": 8,
+              "name": "Ignis"
+            },
+            {
+              "value": 9,
+              "name": "Terra"
+            },
+            {
+              "value": 10,
+              "name": "Glacies"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "name": "motion",
+          "description": "Back-and-forth movement or a one-way sweep through Wings groups.",
+          "used": true,
+          "control": "list",
+          "minimum": 0,
+          "maximum": 2,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": [
+            {
+              "value": 0,
+              "name": "Back and forth"
+            },
+            {
+              "value": 1,
+              "name": "Forward sweep"
+            },
+            {
+              "value": 2,
+              "name": "Backward sweep"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "name": "unused5",
+          "description": "Unused; Wings is the fixed mapping. Transmit zero.",
+          "used": false,
+          "control": "hidden",
+          "minimum": 0,
+          "maximum": 0,
+          "default": 0,
+          "display": {
+            "type": "integer",
+            "unit": ""
+          },
+          "options": []
+        },
+        {
+          "index": 6,
+          "name": "fade",
+          "description": "Linear RGB trail decay; zero retains trails until the group is relit.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 150,
+          "display": {
+            "type": "integer",
+            "unit": "RGB levels/250 ms"
+          },
+          "options": []
+        },
+        {
+          "index": 7,
+          "name": "brightness",
+          "description": "Relative intensity under normal device brightness.",
+          "used": true,
+          "control": "slider",
+          "minimum": 0,
+          "maximum": 255,
+          "default": 255,
+          "display": {
+            "type": "percent",
+            "unit": "%"
+          },
+          "options": []
+        }
+      ]
+    }
+  ],
+  "palettes": [
+    {
+      "id": 0,
+      "name": "Cloud",
+      "colors": [[0, 0, 255], [0, 0, 139], [0, 0, 139], [0, 0, 139], [0, 0, 139], [0, 0, 139], [0, 0, 139], [0, 0, 139], [0, 0, 255], [0, 0, 139], [135, 206, 235], [135, 206, 235], [173, 216, 230], [255, 255, 255], [173, 216, 230], [135, 206, 235]]
+    },
+    {
+      "id": 1,
+      "name": "Lava",
+      "colors": [[0, 0, 0], [128, 0, 0], [0, 0, 0], [128, 0, 0], [139, 0, 0], [139, 0, 0], [128, 0, 0], [139, 0, 0], [139, 0, 0], [139, 0, 0], [255, 0, 0], [255, 165, 0], [255, 255, 255], [255, 165, 0], [255, 0, 0], [139, 0, 0]]
+    },
+    {
+      "id": 2,
+      "name": "Ocean",
+      "colors": [[25, 25, 112], [0, 0, 139], [25, 25, 112], [0, 0, 128], [0, 0, 139], [0, 0, 205], [46, 139, 87], [0, 128, 128], [95, 158, 160], [0, 0, 255], [0, 139, 139], [100, 149, 237], [127, 255, 212], [46, 139, 87], [0, 255, 255], [135, 206, 250]]
+    },
+    {
+      "id": 3,
+      "name": "Forest",
+      "colors": [[0, 100, 0], [0, 100, 0], [85, 107, 47], [0, 100, 0], [0, 128, 0], [34, 139, 34], [107, 142, 35], [0, 128, 0], [46, 139, 87], [102, 205, 170], [50, 205, 50], [154, 205, 50], [144, 238, 144], [124, 252, 0], [102, 205, 170], [34, 139, 34]]
+    },
+    {
+      "id": 4,
+      "name": "Rainbow",
+      "colors": [[255, 0, 0], [213, 42, 0], [171, 85, 0], [171, 127, 0], [171, 171, 0], [86, 213, 0], [0, 255, 0], [0, 213, 42], [0, 171, 85], [0, 86, 170], [0, 0, 255], [42, 0, 213], [85, 0, 171], [127, 0, 129], [171, 0, 85], [213, 0, 43]]
+    },
+    {
+      "id": 5,
+      "name": "Rainbow Stripe",
+      "colors": [[255, 0, 0], [0, 0, 0], [171, 85, 0], [0, 0, 0], [171, 171, 0], [0, 0, 0], [0, 255, 0], [0, 0, 0], [0, 171, 85], [0, 0, 0], [0, 0, 255], [0, 0, 0], [85, 0, 171], [0, 0, 0], [171, 0, 85], [0, 0, 0]]
+    },
+    {
+      "id": 6,
+      "name": "Party",
+      "colors": [[85, 0, 171], [132, 0, 124], [181, 0, 75], [229, 0, 27], [232, 23, 0], [184, 71, 0], [171, 119, 0], [171, 171, 0], [171, 85, 0], [221, 34, 0], [242, 0, 14], [194, 0, 62], [143, 0, 113], [95, 0, 161], [47, 0, 208], [0, 7, 249]]
+    },
+    {
+      "id": 7,
+      "name": "Heat",
+      "colors": [[0, 0, 0], [51, 0, 0], [102, 0, 0], [153, 0, 0], [204, 0, 0], [255, 0, 0], [255, 51, 0], [255, 102, 0], [255, 153, 0], [255, 204, 0], [255, 255, 0], [255, 255, 51], [255, 255, 102], [255, 255, 153], [255, 255, 204], [255, 255, 255]]
+    },
+    {
+      "id": 8,
+      "name": "Ignis",
+      "colors": [[232, 23, 0], [208, 47, 0], [186, 69, 0], [173, 82, 0], [171, 87, 0], [173, 82, 0], [186, 69, 0], [208, 47, 0], [232, 23, 0], [252, 0, 3], [231, 0, 24], [215, 0, 40], [212, 0, 43], [215, 0, 40], [231, 0, 24], [252, 0, 3]]
+    },
+    {
+      "id": 9,
+      "name": "Terra",
+      "colors": [[7, 252, 0], [0, 234, 21], [0, 213, 42], [0, 200, 55], [0, 194, 61], [0, 200, 55], [0, 213, 42], [0, 234, 21], [7, 252, 0], [60, 225, 0], [102, 204, 0], [134, 188, 0], [140, 185, 0], [134, 188, 0], [102, 204, 0], [60, 225, 0]]
+    },
+    {
+      "id": 10,
+      "name": "Glacies",
+      "colors": [[39, 0, 216], [63, 0, 192], [85, 0, 171], [98, 0, 158], [103, 0, 153], [98, 0, 158], [85, 0, 171], [63, 0, 192], [39, 0, 216], [13, 0, 242], [0, 17, 239], [0, 49, 207], [0, 55, 201], [0, 49, 207], [0, 17, 239], [13, 0, 242]]
+    }
+  ],
+  "defaults": {
+    "settings": {
+      "startupBrightness": 35,
+      "minimumBrightness": 35,
+      "maximumBrightness": 200,
+      "startupMode": 0,
+      "musicEnabled": 0,
+      "movementEnabled": 0,
+      "singlePressAction": 1,
+      "doublePressAction": 1,
+      "longPressAction": 1,
+      "flashlightHue": 0,
+      "flashlightSaturation": 0,
+      "flashlightBrightness": 200,
+      "automaticDuration": 9
+    },
+    "automaticPlaylist": [
+      {
+        "animationId": 0,
+        "parameters": [60, 30, 1, 255, 0, 128, 0, 0]
+      },
+      {
+        "animationId": 1,
+        "parameters": [60, 30, 1, 4, 0, 128, 0, 0]
+      },
+      {
+        "animationId": 2,
+        "parameters": [60, 63, 0, 4, 60, 180, 255, 0]
+      },
+      {
+        "animationId": 3,
+        "parameters": [60, 43, 60, 8, 0, 128, 56, 200]
+      },
+      {
+        "animationId": 4,
+        "parameters": [35, 60, 64, 4, 0, 1, 64, 255]
+      },
+      {
+        "animationId": 5,
+        "parameters": [40, 60, 60, 4, 0, 0, 150, 255]
+      }
+    ],
+    "manualPlaylist": [
+      {
+        "animationId": 0,
+        "parameters": [60, 30, 1, 255, 0, 128, 0, 0]
+      },
+      {
+        "animationId": 1,
+        "parameters": [60, 30, 1, 4, 0, 128, 0, 0]
+      },
+      {
+        "animationId": 2,
+        "parameters": [60, 63, 0, 4, 60, 180, 255, 0]
+      },
+      {
+        "animationId": 3,
+        "parameters": [60, 43, 60, 8, 0, 128, 56, 200]
+      },
+      {
+        "animationId": 4,
+        "parameters": [35, 60, 64, 4, 0, 1, 64, 255]
+      },
+      {
+        "animationId": 5,
+        "parameters": [40, 60, 60, 4, 0, 0, 150, 255]
+      }
+    ],
+    "singleSlot": [
+      {
+        "animationId": 0,
+        "parameters": [60, 30, 1, 255, 0, 128, 0, 0]
+      }
+    ],
+    "fallbackAnimationId": 0,
+    "factorySnapshot": {
+      "hex": "010100010000002323c80000000101010000c80906003c1e01ff00800000013c1e010400800000023c3f00043cb4ff00033c2b3c08008038c804233c4004000140ff05283c3c04000096ff06003c1e01ff00800000013c1e010400800000023c3f00043cb4ff00033c2b3c08008038c804233c4004000140ff05283c3c04000096ff003c1e01ff00800000",
+      "sha256": "b7944201d685c566c5638b392a149665d3d2ad4d4db44313307012bc54a5d71f"
+    }
+  }
+}

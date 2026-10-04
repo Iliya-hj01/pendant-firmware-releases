@@ -1,0 +1,448 @@
+{
+  "documentType": "lilum-firmware-definition-schemas",
+  "formatVersion": 1,
+  "documentRevision": 1,
+  "schemas": [
+    {
+      "schemaVersion": 1,
+      "publishedDate": "2026-10-03",
+      "changeNotes": "Initial schema for version-specific firmware documents (lilum-<element>-firmware-v<version>.json). Defines identity, compatibility, release artifacts, the thirteen settings in canonical order, animations with exactly eight parameter slots, palettes, defaults and the content hash.",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Lilum firmware document, schema version 1",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "documentType",
+          "schemaVersion",
+          "product",
+          "firmware",
+          "definition",
+          "compatibility",
+          "release",
+          "settings",
+          "constraints",
+          "animations",
+          "palettes",
+          "defaults"
+        ],
+        "properties": {
+          "documentType": { "const": "lilum-firmware" },
+          "schemaVersion": { "const": 1 },
+          "product": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["code", "key"],
+            "properties": {
+              "code": { "type": "integer", "minimum": 1, "maximum": 65535 },
+              "key": { "$ref": "#/$defs/productKey" }
+            }
+          },
+          "firmware": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["version", "releaseDate", "releaseNotes"],
+            "properties": {
+              "version": { "$ref": "#/$defs/firmwareVersion" },
+              "releaseDate": { "$ref": "#/$defs/date" },
+              "releaseNotes": { "type": "string", "minLength": 1, "maxLength": 2000 }
+            }
+          },
+          "definition": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["revision", "contentHash"],
+            "properties": {
+              "revision": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+              "contentHash": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["algorithm", "canonicalization", "scope", "value"],
+                "properties": {
+                  "algorithm": { "const": "sha256" },
+                  "canonicalization": { "const": "lilum-canonical-json-1" },
+                  "scope": {
+                    "const": ["animations", "constraints", "defaults", "palettes", "settings"]
+                  },
+                  "value": { "$ref": "#/$defs/sha256" }
+                }
+              }
+            }
+          },
+          "compatibility": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["hardwareRevisions", "bleProtocol", "configFormat", "reportedCapabilities"],
+            "properties": {
+              "hardwareRevisions": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": { "type": "integer", "minimum": 1, "maximum": 65535 }
+              },
+              "bleProtocol": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["major", "minor"],
+                "properties": {
+                  "major": { "type": "integer", "minimum": 0, "maximum": 255 },
+                  "minor": { "type": "integer", "minimum": 0, "maximum": 255 }
+                }
+              },
+              "configFormat": { "type": "integer", "minimum": 1, "maximum": 255 },
+              "reportedCapabilities": { "type": "integer", "minimum": 0, "maximum": 4294967295 }
+            }
+          },
+          "release": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["bootloader", "signature", "artifacts"],
+            "properties": {
+              "bootloader": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "imageHeaderSizeBytes",
+                  "imageAlignmentBytes",
+                  "slotSizeBytes",
+                  "trustedKey"
+                ],
+                "properties": {
+                  "name": { "const": "mcuboot" },
+                  "imageHeaderSizeBytes": { "type": "integer", "minimum": 1 },
+                  "imageAlignmentBytes": { "type": "integer", "minimum": 1 },
+                  "slotSizeBytes": { "type": "integer", "minimum": 1 },
+                  "trustedKey": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["algorithm", "publicKeyDerSha256"],
+                    "properties": {
+                      "algorithm": { "const": "ed25519" },
+                      "publicKeyDerSha256": { "$ref": "#/$defs/sha256" }
+                    }
+                  }
+                }
+              },
+              "signature": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["format", "algorithm"],
+                "properties": {
+                  "format": { "const": "mcuboot-embedded" },
+                  "algorithm": { "const": "ed25519" }
+                }
+              },
+              "artifacts": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["id", "hardwareRevisions", "format", "url", "sizeBytes", "sha256"],
+                  "properties": {
+                    "id": { "$ref": "#/$defs/identifier" },
+                    "hardwareRevisions": {
+                      "type": "array",
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": { "type": "integer", "minimum": 1, "maximum": 65535 }
+                    },
+                    "format": { "const": "mcuboot-signed-bin" },
+                    "url": { "$ref": "#/$defs/httpsUrl" },
+                    "sizeBytes": { "type": "integer", "minimum": 1 },
+                    "sha256": { "$ref": "#/$defs/sha256" }
+                  }
+                }
+              }
+            }
+          },
+          "settings": {
+            "type": "array",
+            "minItems": 13,
+            "maxItems": 13,
+            "prefixItems": [
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "startupBrightness" }, "index": { "const": 0 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "minimumBrightness" }, "index": { "const": 1 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "maximumBrightness" }, "index": { "const": 2 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "startupMode" }, "index": { "const": 3 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "musicEnabled" }, "index": { "const": 4 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "movementEnabled" }, "index": { "const": 5 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "singlePressAction" }, "index": { "const": 6 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "doublePressAction" }, "index": { "const": 7 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "longPressAction" }, "index": { "const": 8 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "flashlightHue" }, "index": { "const": 9 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "flashlightSaturation" }, "index": { "const": 10 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "flashlightBrightness" }, "index": { "const": 11 } } },
+              { "$ref": "#/$defs/setting", "properties": { "id": { "const": "automaticDuration" }, "index": { "const": 12 } } }
+            ]
+          },
+          "constraints": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["type", "settings"],
+              "properties": {
+                "type": { "const": "nonDecreasing" },
+                "settings": {
+                  "type": "array",
+                  "minItems": 2,
+                  "items": { "$ref": "#/$defs/identifier" }
+                }
+              }
+            }
+          },
+          "animations": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#/$defs/animation" }
+          },
+          "palettes": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#/$defs/palette" }
+          },
+          "defaults": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "settings",
+              "automaticPlaylist",
+              "manualPlaylist",
+              "singleSlot",
+              "fallbackAnimationId",
+              "factorySnapshot"
+            ],
+            "properties": {
+              "settings": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "startupBrightness",
+                  "minimumBrightness",
+                  "maximumBrightness",
+                  "startupMode",
+                  "musicEnabled",
+                  "movementEnabled",
+                  "singlePressAction",
+                  "doublePressAction",
+                  "longPressAction",
+                  "flashlightHue",
+                  "flashlightSaturation",
+                  "flashlightBrightness",
+                  "automaticDuration"
+                ],
+                "patternProperties": {
+                  "^[a-zA-Z]+$": { "type": "integer", "minimum": 0, "maximum": 255 }
+                }
+              },
+              "automaticPlaylist": { "$ref": "#/$defs/playlist" },
+              "manualPlaylist": { "$ref": "#/$defs/playlist" },
+              "singleSlot": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": { "$ref": "#/$defs/entry" }
+              },
+              "fallbackAnimationId": { "type": "integer", "minimum": 0, "maximum": 255 },
+              "factorySnapshot": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["hex", "sha256"],
+                "properties": {
+                  "hex": { "type": "string", "pattern": "^([0-9a-f]{2}){49,301}$" },
+                  "sha256": { "$ref": "#/$defs/sha256" }
+                }
+              }
+            }
+          }
+        },
+        "$defs": {
+          "identifier": { "type": "string", "pattern": "^[a-z][a-zA-Z0-9_]*$" },
+          "productKey": { "type": "string", "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)+$" },
+          "date": { "type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "httpsUrl": { "type": "string", "pattern": "^https://[^\\s]+$", "maxLength": 512 },
+          "firmwareVersion": {
+            "type": "string",
+            "pattern": "^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\.(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{0,3}|0)$"
+          },
+          "byte": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "display": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "unit"],
+            "properties": {
+              "type": { "enum": ["integer", "percent", "offsetInteger"] },
+              "unit": { "type": "string", "maxLength": 32 },
+              "offset": { "type": "integer", "minimum": 0, "maximum": 255 }
+            },
+            "if": { "properties": { "type": { "const": "offsetInteger" } }, "required": ["type"] },
+            "then": { "required": ["offset"] },
+            "else": { "not": { "required": ["offset"] } }
+          },
+          "option": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["value", "name"],
+            "properties": {
+              "value": { "$ref": "#/$defs/byte" },
+              "name": { "type": "string", "minLength": 1, "maxLength": 64 }
+            }
+          },
+          "setting": {
+            "type": "object",
+            "required": [
+              "id",
+              "index",
+              "name",
+              "description",
+              "control",
+              "minimum",
+              "maximum",
+              "default",
+              "display",
+              "updatePolicy"
+            ],
+            "properties": {
+              "id": { "$ref": "#/$defs/identifier" },
+              "index": { "type": "integer", "minimum": 0, "maximum": 12 },
+              "name": { "type": "string", "minLength": 1, "maxLength": 64 },
+              "description": { "type": "string", "minLength": 1, "maxLength": 500 },
+              "control": { "enum": ["slider", "list", "toggle"] },
+              "minimum": { "$ref": "#/$defs/byte" },
+              "maximum": { "$ref": "#/$defs/byte" },
+              "default": { "$ref": "#/$defs/byte" },
+              "display": { "$ref": "#/$defs/display" },
+              "options": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/option" } },
+              "updatePolicy": { "enum": ["A", "B"] },
+              "requiresCapabilityBit": {
+                "description": "The control is available only when the device reports this hardware capability bit.",
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 31
+              },
+              "showOnlyIfAnimationRequires": {
+                "description": "The app shows the control only when at least one animation in this document requires the named sensor; otherwise it is hidden and the saved value is transmitted unchanged.",
+                "enum": ["music", "movement"]
+              }
+            },
+            "dependentRequired": {
+              "requiresCapabilityBit": ["showOnlyIfAnimationRequires"],
+              "showOnlyIfAnimationRequires": ["requiresCapabilityBit"]
+            },
+            "unevaluatedProperties": false,
+            "if": { "properties": { "control": { "const": "list" } }, "required": ["control"] },
+            "then": { "required": ["options"] },
+            "else": { "not": { "required": ["options"] } }
+          },
+          "parameter": {
+            "type": "object",
+            "required": [
+              "index",
+              "name",
+              "description",
+              "used",
+              "control",
+              "minimum",
+              "maximum",
+              "default",
+              "display",
+              "options"
+            ],
+            "properties": {
+              "index": { "type": "integer", "minimum": 0, "maximum": 7 },
+              "name": { "type": "string", "minLength": 1, "maxLength": 64 },
+              "description": { "type": "string", "minLength": 1, "maxLength": 500 },
+              "used": { "type": "boolean" },
+              "control": { "enum": ["hidden", "slider", "list", "toggle"] },
+              "minimum": { "$ref": "#/$defs/byte" },
+              "maximum": { "$ref": "#/$defs/byte" },
+              "default": { "$ref": "#/$defs/byte" },
+              "display": { "$ref": "#/$defs/display" },
+              "options": { "type": "array", "items": { "$ref": "#/$defs/option" } }
+            },
+            "unevaluatedProperties": false
+          },
+          "animation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "definitionRevision",
+              "name",
+              "description",
+              "requiresMusic",
+              "requiresMovement",
+              "parameters"
+            ],
+            "properties": {
+              "id": { "$ref": "#/$defs/byte" },
+              "definitionRevision": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+              "name": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$", "maxLength": 64 },
+              "description": { "type": "string", "minLength": 1, "maxLength": 500 },
+              "requiresMusic": { "type": "boolean" },
+              "requiresMovement": { "type": "boolean" },
+              "parameters": {
+                "type": "array",
+                "minItems": 8,
+                "maxItems": 8,
+                "prefixItems": [
+                  { "$ref": "#/$defs/parameter", "properties": { "index": { "const": 0 } } },
+                  { "$ref": "#/$defs/parameter", "properties": { "index": { "const": 1 } } },
+                  { "$ref": "#/$defs/parameter", "properties": { "index": { "const": 2 } } },
+                  { "$ref": "#/$defs/parameter", "properties": { "index": { "const": 3 } } },
+                  { "$ref": "#/$defs/parameter", "properties": { "index": { "const": 4 } } },
+                  { "$ref": "#/$defs/parameter", "properties": { "index": { "const": 5 } } },
+                  { "$ref": "#/$defs/parameter", "properties": { "index": { "const": 6 } } },
+                  { "$ref": "#/$defs/parameter", "properties": { "index": { "const": 7 } } }
+                ]
+              }
+            }
+          },
+          "palette": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "colors"],
+            "properties": {
+              "id": { "$ref": "#/$defs/byte" },
+              "name": { "type": "string", "minLength": 1, "maxLength": 64 },
+              "colors": {
+                "type": "array",
+                "minItems": 16,
+                "maxItems": 16,
+                "items": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "items": { "$ref": "#/$defs/byte" }
+                }
+              }
+            }
+          },
+          "entry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["animationId", "parameters"],
+            "properties": {
+              "animationId": { "$ref": "#/$defs/byte" },
+              "parameters": {
+                "type": "array",
+                "minItems": 8,
+                "maxItems": 8,
+                "items": { "$ref": "#/$defs/byte" }
+              }
+            }
+          },
+          "playlist": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 15,
+            "items": { "$ref": "#/$defs/entry" }
+          }
+        }
+      }
+    }
+  ]
+}
