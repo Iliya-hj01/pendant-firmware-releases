@@ -1,0 +1,55 @@
+{
+  "documentType": "lilum-firmware-catalogue",
+  "formatVersion": 1,
+  "catalogRevision": 1,
+  "sharedDocuments": {
+    "elementRegistry": {
+      "path": "element-registery.json",
+      "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/main/element-registery.json",
+      "sizeBytes": 527,
+      "sha256": "1020ad9c7b3e1bd90660e80a8f37567987d4e91e639ac254b6469716842d59d5"
+    },
+    "bleContract": {
+      "path": "lilum-BLE-contract.json",
+      "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/main/lilum-BLE-contract.json",
+      "sizeBytes": 24233,
+      "sha256": "966aa9082b0cac0efda3ad4b8c96a9fa468447fb8d75b39f49b4c7c9bf2e3944"
+    }
+  },
+  "elements": [
+    {
+      "productCode": 1,
+      "productKey": "lilum.mandalum",
+      "releases": [
+        {
+          "firmwareVersion": "1.0.0",
+          "status": "available",
+          "releaseDate": "2026-10-04",
+          "schemaVersion": 1,
+          "definitionRevision": 1,
+          "hardwareRevisions": [1],
+          "bleProtocol": {
+            "major": 1,
+            "minor": 0
+          },
+          "document": {
+            "path": "firmwares/mandalum/lilum-mandalum-firmware-v1.0.0.json",
+            "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/main/firmwares/mandalum/lilum-mandalum-firmware-v1.0.0.json",
+            "sizeBytes": 43463,
+            "sha256": "6130db69108925deffffb1648f6142edafbc3c28ef11098e75e7e45070025c5e"
+          },
+          "artifacts": [
+            {
+              "id": "mandalumHardwareRevision1Application",
+              "hardwareRevisions": [1],
+              "format": "mcuboot-signed-bin",
+              "url": "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/mandalum-v1.0.0/lilum-mandalum-firmware-v1.0.0.bin",
+              "sizeBytes": 217696,
+              "sha256": "658e744b42e70128cb88a2b73cb497c3eff2f16825a5ae16e199da658f3bd5da"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
