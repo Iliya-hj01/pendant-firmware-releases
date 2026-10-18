@@ -1,13 +1,13 @@
 {
   "documentType": "lilum-firmware-catalogue",
   "formatVersion": 1,
-  "catalogRevision": 1,
+  "catalogRevision": 2,
   "sharedDocuments": {
     "elementRegistry": {
       "path": "element-registery.json",
       "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/main/element-registery.json",
-      "sizeBytes": 527,
-      "sha256": "1020ad9c7b3e1bd90660e80a8f37567987d4e91e639ac254b6469716842d59d5"
+      "sizeBytes": 939,
+      "sha256": "897f3d8a6a9ff3fc5567633c1da18adb1605a93a4737f376a357fd81d88c9454"
     },
     "bleContract": {
       "path": "lilum-BLE-contract.json",
@@ -46,6 +46,40 @@
               "url": "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/mandalum-v1.0.0/lilum-mandalum-firmware-v1.0.0.bin",
               "sizeBytes": 217696,
               "sha256": "658e744b42e70128cb88a2b73cb497c3eff2f16825a5ae16e199da658f3bd5da"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "productCode": 2,
+      "productKey": "lilum.spirilum",
+      "releases": [
+        {
+          "firmwareVersion": "1.0.0",
+          "status": "available",
+          "releaseDate": "2026-10-19",
+          "schemaVersion": 1,
+          "definitionRevision": 1,
+          "hardwareRevisions": [1],
+          "bleProtocol": {
+            "major": 1,
+            "minor": 0
+          },
+          "document": {
+            "path": "firmwares/spirilum/lilum-spirilum-firmware-v1.0.0.json",
+            "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/main/firmwares/spirilum/lilum-spirilum-firmware-v1.0.0.json",
+            "sizeBytes": 31717,
+            "sha256": "f5946de300b409424e4584917e3a5f904fa4ffa2653c852b5c468035be7810fd"
+          },
+          "artifacts": [
+            {
+              "id": "spirilumHardwareRevision1Application",
+              "hardwareRevisions": [1],
+              "format": "mcuboot-signed-bin",
+              "url": "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/spirilum-v1.0.0/lilum-spirilum-firmware-v1.0.0.bin",
+              "sizeBytes": 226845,
+              "sha256": "16952d665f0486f1bd9fcd9c1e094f316c5d9c379916044f6664108ea22115c8"
             }
           ]
         }
