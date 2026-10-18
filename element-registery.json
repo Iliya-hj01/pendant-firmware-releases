@@ -16,6 +16,20 @@
           "description": "Mandalum custom PCB, nRF54L15: 28 animation LEDs, 2 charge-indicator LEDs, power button and mode button."
         }
       ]
+    },
+    {
+      "productCode": 2,
+      "productKey": "lilum.spirilum",
+      "displayName": "Spirilum",
+      "releaseDate": "2026-10-18",
+      "status": "active",
+      "hardwareRevisions": [
+        {
+          "revision": 1,
+          "status": "active",
+          "description": "Spirilum custom PCB, nRF54L15: 44 animation LEDs, 1 charge-indicator LED, power button and mode button."
+        }
+      ]
     }
   ]
 }

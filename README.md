@@ -1,6 +1,6 @@
 # Lilum Firmware Releases
 
-Signed firmware images and the shared documents that describe them for Lilum elements (currently the Mandalum, nRF54L15).
+Signed firmware images and shared documents for Lilum elements, including the Mandalum and Spirilum. The catalogue is authoritative for which product versions have actually been released.
 
 Everything here is append-only: a published version is never edited or deleted. A mistake is fixed by publishing a new version, and a bad release is withdrawn in the catalogue with a reason.
 
@@ -30,15 +30,18 @@ Run `release_firmware.ps1` from the firmware repository (`Mandalum-nRF54-PCB`) w
 
 ```powershell
 # 1. Build, sign and check everything; publishes nothing. Test .pio\release\<asset>.bin on hardware.
-.\release_firmware.ps1 -Version 1.1.0 -Notes "What changed" -DryRun
+.\release_firmware.ps1 -Element mandalum -Version 1.1.0 -Notes "What changed" -ApprovedBy "Name" -DryRun
 
 # 2. Rebuild, require the tested SHA-256, then upload and publish.
-.\release_firmware.ps1 -Version 1.1.0 -Notes "What changed" -ApprovedBy "Name" -ConfirmSha256 <sha256 from step 1>
+.\release_firmware.ps1 -Element mandalum -Version 1.1.0 -Notes "What changed" -ApprovedBy "Name" -ConfirmSha256 <sha256 from step 1>
+
+# Spirilum has an independent version history and may use the same version number.
+.\release_firmware.ps1 -Element spirilum -Version 1.0.0 -Notes "First Spirilum release" -ApprovedBy "Name" -DryRun
 ```
 
 The release date is the day the script runs. The script stops at the first failed check:
 
-1. Preflight: clean sources, release repository equal to `origin/main`, version new and higher than every published one, tag not taken, `gh` signed in.
+1. Preflight: clean sources, release repository equal to `origin/main`, version new and higher than every published version of the selected product (versions may match across products), tag not taken, `gh` signed in.
 2. Clean build, host tests, firmware tables export.
 3. Sign, verify, and check the signing key against the bootloader and earlier releases.
 4. Assemble the version document and catalogue in a staged copy, then check: BLE contract matches the firmware, published history is unchanged, a definition revision never changes content, full validation.
@@ -48,4 +51,3 @@ The release date is the day the script runs. The script stops at the first faile
 8. Publish the catalogue last, then verify every live URL, checksum, size and signature.
 
 Shared documents (`element-registery.json`, `lilum-BLE-contract.json`, `lilum-firmware-definition.json`) are edited and reviewed beforehand; the release publishes them together with the first release that needs them. Earlier entries in them must stay byte-identical.
-
