@@ -1,0 +1,91 @@
+{
+  "documentType": "lilum-firmware-catalogue",
+  "formatVersion": 1,
+  "catalogRevision": 2026102401,
+  "sharedDocuments": {
+    "elementRegistry": {
+      "path": "shared/element-registery.json",
+      "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/app-team-lab-20261022-v1/header-fixed-v1/shared/element-registery.json",
+      "sizeBytes": 548,
+      "sha256": "c7b66e68a4c2db700ed267060560a446fd08521d84e1af15ce5632ff659dcff9"
+    },
+    "bleContract": {
+      "path": "shared/lilum-BLE-contract.json",
+      "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/app-team-lab-20261022-v1/header-fixed-v1/shared/lilum-BLE-contract.json",
+      "sizeBytes": 24710,
+      "sha256": "3c9747a9f33b6237876f3571231fb4facddf6463f51b81d01ec19da452446922"
+    }
+  },
+  "elements": [
+    {
+      "productCode": 1,
+      "productKey": "lilum.mandalum",
+      "releases": [
+        {
+          "firmwareVersion": "1.90.0",
+          "status": "available",
+          "releaseDate": "2026-10-24",
+          "schemaVersion": 1,
+          "definitionRevision": 1,
+          "hardwareRevisions": [
+            1
+          ],
+          "bleProtocol": {
+            "major": 1,
+            "minor": 0
+          },
+          "document": {
+            "path": "firmwares/mandalum/lilum-mandalum-firmware-v1.90.0.json",
+            "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/app-team-lab-20261022-v1/header-fixed-v1/firmwares/mandalum/lilum-mandalum-firmware-v1.90.0.json",
+            "sizeBytes": 53253,
+            "sha256": "fe393559e07cb89ff55495f535612833b035a53147eb6d0c90a93570c14052c6"
+          },
+          "artifacts": [
+            {
+              "id": "mandalumHardwareRevision1Application",
+              "hardwareRevisions": [
+                1
+              ],
+              "format": "mcuboot-signed-bin",
+              "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/app-team-lab-20261022-v1/header-fixed-v1/images/mandalum-app-ota-base-mtu23-1.90.0.signed.bin",
+              "sizeBytes": 232273,
+              "sha256": "2e325300168b96a33a939ce35a9125a9791e01f15d020194c6d6de5f508f0631"
+            }
+          ]
+        },
+        {
+          "firmwareVersion": "1.90.1",
+          "status": "available",
+          "releaseDate": "2026-10-24",
+          "schemaVersion": 1,
+          "definitionRevision": 1,
+          "hardwareRevisions": [
+            1
+          ],
+          "bleProtocol": {
+            "major": 1,
+            "minor": 0
+          },
+          "document": {
+            "path": "firmwares/mandalum/lilum-mandalum-firmware-v1.90.1.json",
+            "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/app-team-lab-20261022-v1/header-fixed-v1/firmwares/mandalum/lilum-mandalum-firmware-v1.90.1.json",
+            "sizeBytes": 53253,
+            "sha256": "9d08cd406a0014da88a46f2560cbf17f126d213ce6d540f6b3c402144273fd23"
+          },
+          "artifacts": [
+            {
+              "id": "mandalumHardwareRevision1Application",
+              "hardwareRevisions": [
+                1
+              ],
+              "format": "mcuboot-signed-bin",
+              "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/app-team-lab-20261022-v1/header-fixed-v1/images/mandalum-app-ota-good-mtu23-1.90.1.signed.bin",
+              "sizeBytes": 232273,
+              "sha256": "2057dbafdcd9d311f1333deba74601176ea5698f23501979f9d91188fe5446d6"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

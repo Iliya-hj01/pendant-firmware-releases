@@ -1,0 +1,2 @@
+# Preserve immutable catalogue bytes and recognize their existing CRLF endings.
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

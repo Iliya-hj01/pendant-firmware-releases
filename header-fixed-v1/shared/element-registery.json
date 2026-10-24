@@ -1,0 +1,21 @@
+{
+  "documentType": "lilum-element-registry",
+  "formatVersion": 1,
+  "documentRevision": 1,
+  "elements": [
+    {
+      "productCode": 1,
+      "productKey": "lilum.mandalum",
+      "displayName": "Mandalum",
+      "releaseDate": "2026-10-03",
+      "status": "active",
+      "hardwareRevisions": [
+        {
+          "revision": 1,
+          "status": "active",
+          "description": "Mandalum custom PCB, nRF54L15: 28 animation LEDs, 2 charge-indicator LEDs, power button and mode button."
+        }
+      ]
+    }
+  ]
+}
