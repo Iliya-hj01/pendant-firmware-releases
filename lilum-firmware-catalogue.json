@@ -1,7 +1,7 @@
 {
   "documentType": "lilum-firmware-catalogue",
   "formatVersion": 1,
-  "catalogRevision": 2,
+  "catalogRevision": 3,
   "sharedDocuments": {
     "elementRegistry": {
       "path": "element-registery.json",
@@ -46,6 +46,34 @@
               "url": "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/mandalum-v1.0.0/lilum-mandalum-firmware-v1.0.0.bin",
               "sizeBytes": 217696,
               "sha256": "658e744b42e70128cb88a2b73cb497c3eff2f16825a5ae16e199da658f3bd5da"
+            }
+          ]
+        },
+        {
+          "firmwareVersion": "1.0.1",
+          "status": "available",
+          "releaseDate": "2026-10-27",
+          "schemaVersion": 1,
+          "definitionRevision": 2,
+          "hardwareRevisions": [1],
+          "bleProtocol": {
+            "major": 1,
+            "minor": 0
+          },
+          "document": {
+            "path": "firmwares/mandalum/lilum-mandalum-firmware-v1.0.1.json",
+            "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/main/firmwares/mandalum/lilum-mandalum-firmware-v1.0.1.json",
+            "sizeBytes": 46488,
+            "sha256": "da12022ec1f8a9c9c630edc00da65cfb7858e585511828897b37198a5a28890f"
+          },
+          "artifacts": [
+            {
+              "id": "mandalumHardwareRevision1Application",
+              "hardwareRevisions": [1],
+              "format": "mcuboot-signed-bin",
+              "url": "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/mandalum-v1.0.1/lilum-mandalum-firmware-v1.0.1.bin",
+              "sizeBytes": 228077,
+              "sha256": "03fd2f41acc3124d67794cbd64f4fee4ed5ba7325cbd055d90849a252a5c532b"
             }
           ]
         }
