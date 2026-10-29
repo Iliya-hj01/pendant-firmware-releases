@@ -1,7 +1,7 @@
 {
   "documentType": "lilum-firmware-catalogue",
   "formatVersion": 1,
-  "catalogRevision": 11,
+  "catalogRevision": 12,
   "sharedDocuments": {
     "elementRegistry": {
       "path": "element-registery.json",
@@ -332,6 +332,34 @@
               "url": "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/spirilum-v1.0.5/lilum-spirilum-firmware-v1.0.5.bin",
               "sizeBytes": 229289,
               "sha256": "c1d9b2bd63c756d0cbd5dbc9bf4dc0840ce1390c7cefa2214dd25bcbbbc1a53f"
+            }
+          ]
+        },
+        {
+          "firmwareVersion": "1.0.6",
+          "status": "available",
+          "releaseDate": "2026-10-29",
+          "schemaVersion": 1,
+          "definitionRevision": 3,
+          "hardwareRevisions": [1],
+          "bleProtocol": {
+            "major": 1,
+            "minor": 0
+          },
+          "document": {
+            "path": "firmwares/spirilum/lilum-spirilum-firmware-v1.0.6.json",
+            "url": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/main/firmwares/spirilum/lilum-spirilum-firmware-v1.0.6.json",
+            "sizeBytes": 38904,
+            "sha256": "1304bc47fe24a37f1298114916a1c4ffdf065a3594d032f5eb4ee72376307771"
+          },
+          "artifacts": [
+            {
+              "id": "spirilumHardwareRevision1Application",
+              "hardwareRevisions": [1],
+              "format": "mcuboot-signed-bin",
+              "url": "https://github.com/Iliya-hj01/pendant-firmware-releases/releases/download/spirilum-v1.0.6/lilum-spirilum-firmware-v1.0.6.bin",
+              "sizeBytes": 229305,
+              "sha256": "f5fa950d0609cd4fefc78567798ad6d6d3ecdf9c2f25ebf0cc8f4bcbfb33ffea"
             }
           ]
         }
