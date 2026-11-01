@@ -1,7 +1,7 @@
 {
   "documentType": "lilum-playlist-index",
   "formatVersion": 1,
-  "indexRevision": 1,
+  "indexRevision": 2,
   "playlists": [
     {
       "playlistId": "mandalum-synthetic-demo",
@@ -22,6 +22,26 @@
       "path": "playlists/mandalum-synthetic-demo/r1.json",
       "sizeBytes": 833,
       "sha256": "544f3a63c7efc9b90ebc52bd814f3cbbf53e86840ebc984b6cc4f7a7a5b83f57"
+    },
+    {
+      "playlistId": "mandalum-defaults",
+      "publicationRevision": 1,
+      "status": "available",
+      "name": "Mandalum Defaults",
+      "description": "The first six Mandalum animations in firmware order, using their published factory defaults.",
+      "target": {
+        "productCode": 1,
+        "productKey": "lilum.mandalum",
+        "hardwareRevisions": [
+          1
+        ],
+        "firmwareVersion": "1.0.8",
+        "definitionRevision": 6,
+        "definitionDocumentSha256": "95dffba28bc94fe3c4c27458e2159f86c1f1a1e232710bce41729e9305a91aa2"
+      },
+      "path": "playlists/mandalum-defaults/r1.json",
+      "sizeBytes": 2002,
+      "sha256": "8b5f35bfc1a0b75507786564bc3b7c0c8717ee33c2cf5ed9a2325d09b9b21d4e"
     }
   ],
   "migrations": []

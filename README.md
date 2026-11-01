@@ -32,6 +32,33 @@ Firmware images are GitHub release assets, tag `<element>-v<version>` (for examp
 
 The legacy `manifest.json` (nama-pendant) and its `v1.0.0` to `v1.3.1` releases are kept for older app builds and are no longer updated.
 
+## Playlists
+
+Published playlists have a separate entry point:
+
+```
+https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/main/playlists/index-v1.json
+```
+
+The index records each publication's status, target, relative document path,
+byte size and SHA-256. Verify the document size and checksum before uploading
+the complete playlist to an element. Targets pin the product, hardware
+revisions, firmware version, definition revision and firmware-document SHA-256.
+Animation IDs are stable slugs from `definition.publicationAnimationIds`;
+each entry supplies all eight parameter bytes. `durationSeconds` is shared
+by every entry.
+
+[Mandalum Defaults](playlists/mandalum-defaults/r1.json) targets Mandalum
+hardware revision 1, firmware 1.0.8 and definition revision 6. It contains
+Rainbow Cycle, Palette Cycle, Confetti, Vortex, Portal and Wings, in that
+order, using their published factory parameter defaults and 10 seconds per
+entry (a 60-second cycle).
+
+Playlist publications are immutable. Publish corrections under a new
+`publicationRevision` and `r<revision>.json` path, preserve existing
+publications and migrations, and increment `indexRevision` when updating
+the index. Playlist publication does not modify the firmware catalogue.
+
 ## Publishing a release
 
 Run `release_firmware.ps1` from the firmware repository (`Mandalum-nRF54-PCB`) with a clean, committed source tree. Do not edit this repository by hand during a release.
