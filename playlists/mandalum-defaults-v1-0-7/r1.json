@@ -1,0 +1,111 @@
+{
+  "documentType": "lilum-playlist",
+  "formatVersion": 1,
+  "playlistId": "mandalum-defaults-v1-0-7",
+  "publicationRevision": 1,
+  "name": "Mandalum Defaults (1.0.7)",
+  "description": "The first six Mandalum animations in firmware order, using firmware 1.0.7 factory defaults.",
+  "target": {
+    "productCode": 1,
+    "productKey": "lilum.mandalum",
+    "hardwareRevisions": [
+      1
+    ],
+    "firmwareVersion": "1.0.7",
+    "definitionRevision": 5,
+    "definitionDocumentSha256": "da113be52fde57b7e24480fe47aa2e021e61757f1b55bb70cb3af2e3907ef018"
+  },
+  "durationSeconds": 10,
+  "entries": [
+    {
+      "entryId": "rainbow-cycle-default",
+      "animationId": "rainbow-cycle",
+      "parameters": [
+        60,
+        30,
+        1,
+        255,
+        0,
+        128,
+        0,
+        0
+      ],
+      "label": "Rainbow Cycle"
+    },
+    {
+      "entryId": "palette-cycle-default",
+      "animationId": "palette-cycle",
+      "parameters": [
+        60,
+        30,
+        1,
+        4,
+        0,
+        128,
+        0,
+        0
+      ],
+      "label": "Palette Cycle"
+    },
+    {
+      "entryId": "confetti-default",
+      "animationId": "confetti",
+      "parameters": [
+        60,
+        63,
+        0,
+        4,
+        60,
+        180,
+        255,
+        0
+      ],
+      "label": "Confetti"
+    },
+    {
+      "entryId": "vortex-default",
+      "animationId": "vortex",
+      "parameters": [
+        60,
+        43,
+        60,
+        8,
+        0,
+        128,
+        56,
+        200
+      ],
+      "label": "Vortex"
+    },
+    {
+      "entryId": "portal-default",
+      "animationId": "portal",
+      "parameters": [
+        35,
+        60,
+        64,
+        4,
+        0,
+        1,
+        64,
+        255
+      ],
+      "label": "Portal"
+    },
+    {
+      "entryId": "wings-default",
+      "animationId": "wings",
+      "parameters": [
+        40,
+        60,
+        60,
+        4,
+        0,
+        0,
+        150,
+        255
+      ],
+      "label": "Wings"
+    }
+  ]
+}

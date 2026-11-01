@@ -1,0 +1,398 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/main/playlists/schema-v1.json",
+  "title": "Lilum playlist publication contract, version 1",
+  "description": "Playlist documents, their publication index, and explicit forward migration documents. Firmware compatibility and cross-document integrity also require the semantic checks documented in README.md.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/playlist"
+    },
+    {
+      "$ref": "#/$defs/index"
+    },
+    {
+      "$ref": "#/$defs/migration"
+    }
+  ],
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "productCode",
+        "productKey",
+        "hardwareRevisions",
+        "firmwareVersion",
+        "definitionRevision",
+        "definitionDocumentSha256"
+      ],
+      "properties": {
+        "productCode": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "productKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hardwareRevisions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "firmwareVersion": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "definitionRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "definitionDocumentSha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entryId",
+        "animationId",
+        "parameters"
+      ],
+      "properties": {
+        "entryId": {
+          "$ref": "#/$defs/slug"
+        },
+        "animationId": {
+          "$ref": "#/$defs/slug"
+        },
+        "parameters": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          }
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "playlist": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "documentType",
+        "formatVersion",
+        "playlistId",
+        "publicationRevision",
+        "name",
+        "target",
+        "durationSeconds",
+        "entries"
+      ],
+      "properties": {
+        "documentType": {
+          "const": "lilum-playlist"
+        },
+        "formatVersion": {
+          "const": 1
+        },
+        "playlistId": {
+          "$ref": "#/$defs/slug"
+        },
+        "publicationRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "durationSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/entry"
+          }
+        }
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceAnimationId",
+        "targetAnimationId"
+      ],
+      "properties": {
+        "sourceAnimationId": {
+          "$ref": "#/$defs/slug"
+        },
+        "targetAnimationId": {
+          "$ref": "#/$defs/slug"
+        }
+      }
+    },
+    "migration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "documentType",
+        "formatVersion",
+        "migrationId",
+        "publicationRevision",
+        "name",
+        "source",
+        "target",
+        "parameterPolicy",
+        "durationPolicy",
+        "animationMappings"
+      ],
+      "properties": {
+        "documentType": {
+          "const": "lilum-playlist-migration"
+        },
+        "formatVersion": {
+          "const": 1
+        },
+        "migrationId": {
+          "$ref": "#/$defs/slug"
+        },
+        "publicationRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/target"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "parameterPolicy": {
+          "const": "preserve"
+        },
+        "durationPolicy": {
+          "const": "preserve"
+        },
+        "animationMappings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/mapping"
+          }
+        }
+      }
+    },
+    "withdrawal": {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "withdrawn"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "withdrawalReason"
+        ]
+      }
+    },
+    "playlistIndexEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "playlistId",
+        "publicationRevision",
+        "status",
+        "name",
+        "target",
+        "path",
+        "sizeBytes",
+        "sha256"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/withdrawal"
+        }
+      ],
+      "properties": {
+        "playlistId": {
+          "$ref": "#/$defs/slug"
+        },
+        "publicationRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "available",
+            "withdrawn"
+          ]
+        },
+        "withdrawalReason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^playlists/[a-z0-9]+(?:-[a-z0-9]+)*/r[1-9][0-9]*\\.json$"
+        },
+        "sizeBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "migrationIndexEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "migrationId",
+        "publicationRevision",
+        "status",
+        "name",
+        "source",
+        "target",
+        "path",
+        "sizeBytes",
+        "sha256"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/withdrawal"
+        }
+      ],
+      "properties": {
+        "migrationId": {
+          "$ref": "#/$defs/slug"
+        },
+        "publicationRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "available",
+            "withdrawn"
+          ]
+        },
+        "withdrawalReason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/target"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^playlists/migrations/[a-z0-9]+(?:-[a-z0-9]+)*/r[1-9][0-9]*\\.json$"
+        },
+        "sizeBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "index": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "documentType",
+        "formatVersion",
+        "indexRevision",
+        "playlists",
+        "migrations"
+      ],
+      "properties": {
+        "documentType": {
+          "const": "lilum-playlist-index"
+        },
+        "formatVersion": {
+          "const": 1
+        },
+        "indexRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "playlists": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/playlistIndexEntry"
+          }
+        },
+        "migrations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/migrationIndexEntry"
+          }
+        }
+      }
+    }
+  }
+}

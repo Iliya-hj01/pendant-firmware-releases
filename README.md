@@ -59,6 +59,66 @@ Playlist publications are immutable. Publish corrections under a new
 publications and migrations, and increment `indexRevision` when updating
 the index. Playlist publication does not modify the firmware catalogue.
 
+### Test publications
+
+- [Mandalum Defaults, revision 2](playlists/mandalum-defaults/r2.json)
+  targets firmware 1.0.8 / definition 6. Rainbow Cycle speed changes from
+  60 to 90 and spread from 30 to 45. The other 46 parameter bytes, entry
+  order and 10-second duration are unchanged from revision 1.
+- [Mandalum Defaults (1.0.7), revision 1](playlists/mandalum-defaults-v1-0-7/r1.json)
+  targets firmware 1.0.7 / definition 5, with the original six animations,
+  all 48 factory-default parameter bytes and 10 seconds per entry.
+- [Mandalum 1.0.7 to 1.0.8 migration, revision 1](playlists/migrations/mandalum-1-0-7-to-1-0-8/r1.json)
+  explicitly maps those six animation slugs to themselves.
+
+### Version 1 data contract
+
+[schema-v1.json](playlists/schema-v1.json) is the JSON Schema 2020-12
+contract for playlist documents, the index and migration documents.
+This defines release data; app-side migration support must implement
+the following semantic checks in addition to JSON Schema validation.
+
+A playlist publication is identified by `(playlistId, publicationRevision)`,
+not `playlistId` alone. Index rows for revisions 1 and 2 coexist; history
+is not overwritten. Match the exact target and available status before
+selecting the highest publication revision for a playlist ID. Migration
+publications likewise use `(migrationId, publicationRevision)`. Each
+identity must appear only once, and its path must match the ID and revision.
+Withdrawn index rows require a nonempty `withdrawalReason`; the immutable
+documents and their earlier revisions remain in place.
+
+A migration index row records `migrationId`, `publicationRevision`,
+`status`, `name`, optional `description`, full `source` and `target`
+fingerprints, `path`, `sizeBytes` and `sha256`. Verify the downloaded
+bytes and match its metadata to the index before using the document.
+Both fingerprints must match available firmware catalogue documents,
+including their SHA-256, product, hardware revisions and definition revision.
+
+Migration documents use `documentType: "lilum-playlist-migration"` and
+`formatVersion: 1`. `animationMappings` contains `sourceAnimationId` and
+`targetAnimationId` stable slugs, with exactly one mapping per source slug.
+Every source and destination slug must exist in its respective firmware
+definition. A listed migration is directional; never infer a reverse map.
+
+Version 1 supports only `parameterPolicy: "preserve"` and
+`durationPolicy: "preserve"`: preserve all eight parameter bytes, entry
+IDs, labels, entry order and the shared duration, and change only mapped
+animation slugs and the target. Validate parameters against both firmware
+definitions, including ranges and list options, and validate the duration
+against both firmware settings. Entry IDs must be unique within a playlist.
+Reject the entire operation on an unmapped slug, ambiguous mapping,
+fingerprint mismatch or invalid value; never skip, clamp, default or
+partially apply entries.
+
+The result is unpublished local/device playlist data, not a newly published
+playlist identity. This migration does not adopt revision 2 parameters or
+redirect the 1.0.7 playlist ID to `mandalum-defaults`. Its parameters stay
+at the source values even though the target firmware becomes 1.0.8.
+
+Published schema versions are immutable; incompatible future contracts
+must use a new schema and format version. Firmware catalogue documents
+are not modified by playlist or migration publication.
+
 ## Publishing a release
 
 Run `release_firmware.ps1` from the firmware repository (`Mandalum-nRF54-PCB`) with a clean, committed source tree. Do not edit this repository by hand during a release.

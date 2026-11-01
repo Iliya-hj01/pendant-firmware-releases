@@ -1,7 +1,7 @@
 {
   "documentType": "lilum-playlist-index",
   "formatVersion": 1,
-  "indexRevision": 2,
+  "indexRevision": 3,
   "playlists": [
     {
       "playlistId": "mandalum-synthetic-demo",
@@ -42,7 +42,78 @@
       "path": "playlists/mandalum-defaults/r1.json",
       "sizeBytes": 2002,
       "sha256": "8b5f35bfc1a0b75507786564bc3b7c0c8717ee33c2cf5ed9a2325d09b9b21d4e"
+    },
+    {
+      "playlistId": "mandalum-defaults",
+      "publicationRevision": 2,
+      "status": "available",
+      "name": "Mandalum Defaults",
+      "description": "Revision 2 test: Rainbow Cycle speed 90 and spread 45; all other parameters retain their factory defaults.",
+      "target": {
+        "productCode": 1,
+        "productKey": "lilum.mandalum",
+        "hardwareRevisions": [
+          1
+        ],
+        "firmwareVersion": "1.0.8",
+        "definitionRevision": 6,
+        "definitionDocumentSha256": "95dffba28bc94fe3c4c27458e2159f86c1f1a1e232710bce41729e9305a91aa2"
+      },
+      "path": "playlists/mandalum-defaults/r2.json",
+      "sizeBytes": 2016,
+      "sha256": "a875d6332ec4295fe8af1c5a42622d36a4c3e309d1cd7deedc7ecc34b70b56ed"
+    },
+    {
+      "playlistId": "mandalum-defaults-v1-0-7",
+      "publicationRevision": 1,
+      "status": "available",
+      "name": "Mandalum Defaults (1.0.7)",
+      "description": "The first six Mandalum animations in firmware order, using firmware 1.0.7 factory defaults.",
+      "target": {
+        "productCode": 1,
+        "productKey": "lilum.mandalum",
+        "hardwareRevisions": [
+          1
+        ],
+        "firmwareVersion": "1.0.7",
+        "definitionRevision": 5,
+        "definitionDocumentSha256": "da113be52fde57b7e24480fe47aa2e021e61757f1b55bb70cb3af2e3907ef018"
+      },
+      "path": "playlists/mandalum-defaults-v1-0-7/r1.json",
+      "sizeBytes": 2016,
+      "sha256": "1db438add178402cc3317e05c45c6f72f2cf6ea491e96200fc7bf1788f262cb3"
     }
   ],
-  "migrations": []
+  "migrations": [
+    {
+      "migrationId": "mandalum-1-0-7-to-1-0-8",
+      "publicationRevision": 1,
+      "status": "available",
+      "name": "Mandalum 1.0.7 to 1.0.8",
+      "description": "Forward migration for the first six Mandalum animation slugs. Preserves all parameter bytes and entry timing.",
+      "source": {
+        "productCode": 1,
+        "productKey": "lilum.mandalum",
+        "hardwareRevisions": [
+          1
+        ],
+        "firmwareVersion": "1.0.7",
+        "definitionRevision": 5,
+        "definitionDocumentSha256": "da113be52fde57b7e24480fe47aa2e021e61757f1b55bb70cb3af2e3907ef018"
+      },
+      "target": {
+        "productCode": 1,
+        "productKey": "lilum.mandalum",
+        "hardwareRevisions": [
+          1
+        ],
+        "firmwareVersion": "1.0.8",
+        "definitionRevision": 6,
+        "definitionDocumentSha256": "95dffba28bc94fe3c4c27458e2159f86c1f1a1e232710bce41729e9305a91aa2"
+      },
+      "path": "playlists/migrations/mandalum-1-0-7-to-1-0-8/r1.json",
+      "sizeBytes": 1508,
+      "sha256": "e3128550578c4d836b191902ff43d128e12922328b113cf46196c7f066cb09f9"
+    }
+  ]
 }
