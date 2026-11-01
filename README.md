@@ -20,6 +20,14 @@ https://raw.githubusercontent.com/Iliya-hj01/pendant-firmware-releases/main/lilu
 | `lilum-firmware-definition.json` | JSON schemas for the firmware documents, one entry per schema version. |
 | `firmwares/<element>/lilum-<element>-firmware-v<version>.json` | One release: settings, animations, palettes, defaults, compatibility, artifact URL and checksum. |
 
+Firmware-document schema version 2 requires
+`definition.publicationAnimationIds`, a stable-slug-to-animation-ID mapping.
+An empty object explicitly disables playlist publication/conversion. The
+release tool selects the highest published schema version and validates that
+every mapped ID exists in that firmware document's animation list. Adding a
+future schema version requires updating and testing the release generator and
+validator before using it for a firmware release.
+
 Firmware images are GitHub release assets, tag `<element>-v<version>` (for example `mandalum-v1.0.0`), asset `lilum-<element>-firmware-v<version>.bin`. Verify the SHA-256 and size from the catalogue before use.
 
 The legacy `manifest.json` (nama-pendant) and its `v1.0.0` to `v1.3.1` releases are kept for older app builds and are no longer updated.
@@ -50,4 +58,4 @@ The release date is the day the script runs. The script stops at the first faile
 7. Publish the version document and shared documents, and verify the live files.
 8. Publish the catalogue last, then verify every live URL, checksum, size and signature.
 
-Shared documents (`element-registery.json`, `lilum-BLE-contract.json`, `lilum-firmware-definition.json`) are edited and reviewed beforehand; the release publishes them together with the first release that needs them. Earlier entries in them must stay byte-identical.
+Shared documents (`element-registery.json`, `lilum-BLE-contract.json`, `lilum-firmware-definition.json`, `README.md`) are edited and reviewed beforehand; the release publishes them together with the first release that needs them. Earlier entries in them must stay byte-identical.
