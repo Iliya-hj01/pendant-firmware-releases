@@ -1,0 +1,28 @@
+{
+  "documentType": "lilum-playlist-index",
+  "formatVersion": 1,
+  "indexRevision": 1,
+  "playlists": [
+    {
+      "playlistId": "mandalum-synthetic-demo",
+      "publicationRevision": 1,
+      "status": "available",
+      "name": "Mandalum Synthetic Demo",
+      "description": "Synthetic example publication; not production-curated or R23 evidence.",
+      "target": {
+        "productCode": 1,
+        "productKey": "lilum.mandalum",
+        "hardwareRevisions": [
+          1
+        ],
+        "firmwareVersion": "1.0.7",
+        "definitionRevision": 5,
+        "definitionDocumentSha256": "da113be52fde57b7e24480fe47aa2e021e61757f1b55bb70cb3af2e3907ef018"
+      },
+      "path": "playlists/mandalum-synthetic-demo/r1.json",
+      "sizeBytes": 833,
+      "sha256": "544f3a63c7efc9b90ebc52bd814f3cbbf53e86840ebc984b6cc4f7a7a5b83f57"
+    }
+  ],
+  "migrations": []
+}
