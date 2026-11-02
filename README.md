@@ -123,6 +123,33 @@ Published schema versions are immutable; incompatible future contracts
 must use a new schema and format version. Firmware catalogue documents
 are not modified by playlist or migration publication.
 
+### Offline publication gate
+
+Before opening a publication PR, run Python 3.12 or newer:
+
+```powershell
+python -m pip install -r requirements-dev.txt
+python -m unittest discover -s tests -v
+python scripts/validate_playlists.py --base-ref <immutable-main-commit-sha>
+```
+
+The validator performs no network access and executes no downloaded instructions.
+It checks the immutable JSON Schema plus the app's byte/count/text bounds,
+strict JSON tokens, exact catalogue/firmware bindings, numeric animation maps,
+parameter domains (including hidden defaults), duration, hashes and canonical
+paths. It validates every available revision, not just the highest one.
+The history gate rejects removal or editing of published payloads/schema,
+changed index metadata, revision rollback and reactivation of withdrawals.
+PR CI invokes both gates using the PR's immutable base SHA.
+
+Withdrawn records remain recognizable history and must retain a nonblank reason.
+Their payloads cannot be used or requalified as valid publications: revision 1
+of the Mandalum migration has incomplete source coverage, and revision 2 has
+incorrect indexed integrity metadata. Both remain byte-identical; only revision
+3 is executable. The validator reports these exclusions explicitly, while the
+history gate still protects all withdrawn payload bytes and indexed identities.
+Keep negative fixtures in `tests`, never in the production index.
+
 ## Publishing a release
 
 Run `release_firmware.ps1` from the firmware repository (`Mandalum-nRF54-PCB`) with a clean, committed source tree. Do not edit this repository by hand during a release.

@@ -1,7 +1,7 @@
 {
   "documentType": "lilum-playlist-index",
   "formatVersion": 1,
-  "indexRevision": 5,
+  "indexRevision": 6,
   "playlists": [
     {
       "playlistId": "mandalum-synthetic-demo",
@@ -88,7 +88,8 @@
     {
       "migrationId": "mandalum-1-0-7-to-1-0-8",
       "publicationRevision": 1,
-      "status": "available",
+      "status": "withdrawn",
+      "withdrawalReason": "Incomplete source-slug coverage: revision 1 maps six of ten source animations; use revision 3.",
       "name": "Mandalum 1.0.7 to 1.0.8",
       "description": "Forward migration for the first six Mandalum animation slugs. Preserves all parameter bytes and entry timing.",
       "source": {
