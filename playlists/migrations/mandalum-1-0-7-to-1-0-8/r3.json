@@ -1,0 +1,72 @@
+{
+  "documentType": "lilum-playlist-migration",
+  "formatVersion": 1,
+  "migrationId": "mandalum-1-0-7-to-1-0-8",
+  "publicationRevision": 3,
+  "name": "Mandalum 1.0.7 to 1.0.8",
+  "description": "Forward migration covering all ten Mandalum 1.0.7 animation slugs. Preserves all eight parameter bytes and playlist duration.",
+  "source": {
+    "productCode": 1,
+    "productKey": "lilum.mandalum",
+    "hardwareRevisions": [
+      1
+    ],
+    "firmwareVersion": "1.0.7",
+    "definitionRevision": 5,
+    "definitionDocumentSha256": "da113be52fde57b7e24480fe47aa2e021e61757f1b55bb70cb3af2e3907ef018"
+  },
+  "target": {
+    "productCode": 1,
+    "productKey": "lilum.mandalum",
+    "hardwareRevisions": [
+      1
+    ],
+    "firmwareVersion": "1.0.8",
+    "definitionRevision": 6,
+    "definitionDocumentSha256": "95dffba28bc94fe3c4c27458e2159f86c1f1a1e232710bce41729e9305a91aa2"
+  },
+  "parameterPolicy": "preserve",
+  "durationPolicy": "preserve",
+  "animationMappings": [
+    {
+      "sourceAnimationId": "rainbow-cycle",
+      "targetAnimationId": "rainbow-cycle"
+    },
+    {
+      "sourceAnimationId": "palette-cycle",
+      "targetAnimationId": "palette-cycle"
+    },
+    {
+      "sourceAnimationId": "confetti",
+      "targetAnimationId": "confetti"
+    },
+    {
+      "sourceAnimationId": "vortex",
+      "targetAnimationId": "vortex"
+    },
+    {
+      "sourceAnimationId": "portal",
+      "targetAnimationId": "portal"
+    },
+    {
+      "sourceAnimationId": "wings",
+      "targetAnimationId": "wings"
+    },
+    {
+      "sourceAnimationId": "color-test",
+      "targetAnimationId": "color-test"
+    },
+    {
+      "sourceAnimationId": "mic-confetti",
+      "targetAnimationId": "mic-confetti"
+    },
+    {
+      "sourceAnimationId": "mic-glow",
+      "targetAnimationId": "mic-glow"
+    },
+    {
+      "sourceAnimationId": "mic-vu",
+      "targetAnimationId": "mic-vu"
+    }
+  ]
+}

@@ -44,6 +44,8 @@ The index records each publication's status, target, relative document path,
 byte size and SHA-256. Verify the document size and checksum before uploading
 the complete playlist to an element. Targets pin the product, hardware
 revisions, firmware version, definition revision and firmware-document SHA-256.
+Compute `sizeBytes` and `sha256` from the exact Git blob bytes, not a
+CRLF-converted working-tree copy.
 Animation IDs are stable slugs from `definition.publicationAnimationIds`;
 each entry supplies all eight parameter bytes. `durationSeconds` is shared
 by every entry.
@@ -68,8 +70,10 @@ the index. Playlist publication does not modify the firmware catalogue.
 - [Mandalum Defaults (1.0.7), revision 1](playlists/mandalum-defaults-v1-0-7/r1.json)
   targets firmware 1.0.7 / definition 5, with the original six animations,
   all 48 factory-default parameter bytes and 10 seconds per entry.
-- [Mandalum 1.0.7 to 1.0.8 migration, revision 1](playlists/migrations/mandalum-1-0-7-to-1-0-8/r1.json)
-  explicitly maps those six animation slugs to themselves.
+- [Mandalum 1.0.7 to 1.0.8 migration, revision 3](playlists/migrations/mandalum-1-0-7-to-1-0-8/r3.json)
+  maps all ten source animation slugs to themselves and preserves every
+  parameter byte and playlist duration. Migration revision 2 is withdrawn
+  because its indexed size and checksum do not match its published Git blob.
 
 ### Version 1 data contract
 
